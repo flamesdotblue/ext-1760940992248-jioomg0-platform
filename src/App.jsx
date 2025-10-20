@@ -1,26 +1,58 @@
 import { useState } from 'react'
+import Header from './components/Header'
+import StyleControls from './components/StyleControls'
+import PortraitCard from './components/PortraitCard'
+import Gallery from './components/Gallery'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [skinTone, setSkinTone] = useState('#f7d3c2')
+  const [hairColor, setHairColor] = useState('#2f2a28')
+  const [hairStyle, setHairStyle] = useState('medium')
+  const [bg, setBg] = useState({ from: '#fdf2f8', to: '#e0f2fe' })
+  const [accent, setAccent] = useState('#8b5cf6')
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
+    <div className="min-h-screen bg-gradient-to-b from-white to-slate-50 text-slate-900">
+      <Header />
+      <main className="mx-auto max-w-6xl px-4 pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="order-2 lg:order-1">
+            <StyleControls
+              skinTone={skinTone}
+              setSkinTone={setSkinTone}
+              hairColor={hairColor}
+              setHairColor={setHairColor}
+              hairStyle={hairStyle}
+              setHairStyle={setHairStyle}
+              bg={bg}
+              setBg={setBg}
+              accent={accent}
+              setAccent={setAccent}
+            />
+            <Gallery
+              onSelect={(preset) => {
+                setSkinTone(preset.skinTone)
+                setHairColor(preset.hairColor)
+                setHairStyle(preset.hairStyle)
+                setBg(preset.bg)
+                setAccent(preset.accent)
+              }}
+            />
+          </div>
+          <div className="order-1 lg:order-2">
+            <PortraitCard
+              skinTone={skinTone}
+              hairColor={hairColor}
+              hairStyle={hairStyle}
+              bg={bg}
+              accent={accent}
+            />
+          </div>
         </div>
-      </div>
+        <p className="mt-10 text-sm text-slate-600 leading-relaxed">
+          This app renders a wholesome, non-photorealistic illustration of a young student. It avoids any sexualized depiction and focuses on friendly, age-appropriate aesthetics.
+        </p>
+      </main>
     </div>
   )
 }
